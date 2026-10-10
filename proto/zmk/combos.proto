@@ -55,6 +55,8 @@ message Combo {
     bool slow_release = 6;
     // Optional user-facing label stored with the combo. Empty = unnamed.
     string name = 7;
+    // User-controlled presentation order. 0 means use the stable pool index.
+    uint32 display_order = 8;
 }
 
 // Pairs a combo with its stable pool index (== virtual-key-position arg ==
