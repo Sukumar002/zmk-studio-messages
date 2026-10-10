@@ -53,6 +53,8 @@ message Combo {
     sint32 timeout_ms = 4;
     sint32 require_prior_idle_ms = 5;
     bool slow_release = 6;
+    // Optional user-facing label stored with the combo. Empty = unnamed.
+    string name = 7;
 }
 
 // Pairs a combo with its stable pool index (== virtual-key-position arg ==
