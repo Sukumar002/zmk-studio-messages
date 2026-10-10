@@ -1,1 +1,2 @@
 zmk.combos.Combo.key_positions max_count:16
+zmk.combos.Combo.name max_size:32
