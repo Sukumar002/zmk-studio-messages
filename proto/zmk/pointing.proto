@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package zmk.pointing;
+
+message MouseSettings {
+    uint32 move_speed = 1;
+    uint32 scroll_speed = 2;
+    uint32 acceleration = 3;
+}
+
+message Request {
+    oneof request_type {
+        bool get_settings = 1;
+        MouseSettings set_settings = 2;
+    }
+}
+
+message Response {
+    oneof response_type {
+        MouseSettings get_settings = 1;
+        MouseSettings set_settings = 2;
+    }
+}
+
+message Notification {}
