@@ -7,12 +7,50 @@ enum LockState {
     ZMK_STUDIO_CORE_LOCK_STATE_UNLOCKED = 1;
 }
 
+enum StatusTransport {
+    ZMK_STUDIO_STATUS_TRANSPORT_NONE = 0;
+    ZMK_STUDIO_STATUS_TRANSPORT_USB = 1;
+    ZMK_STUDIO_STATUS_TRANSPORT_BLE = 2;
+}
+
+enum StatusOsMode {
+    ZMK_STUDIO_STATUS_OS_MODE_UNKNOWN = 0;
+    ZMK_STUDIO_STATUS_OS_MODE_MACOS = 1;
+    ZMK_STUDIO_STATUS_OS_MODE_WINDOWS = 2;
+}
+
+message StatusSnapshot {
+    uint32 active_layer = 1;
+    string layer_name = 2;
+    uint32 modifiers = 3;
+    StatusTransport transport = 4;
+    uint32 ble_profile = 5;
+    bool connected = 6;
+    bool usb_hid_ready = 7;
+    bool ble_profile_connected = 8;
+    bool ble_profile_bonded = 9;
+    uint32 hid_indicators = 10;
+
+    // -1 means unavailable/not reported. Source 0 and source 1 are the two
+    // split peripherals; Studio presents them as L/R for two-half keyboards.
+    int32 left_battery = 11;
+    int32 right_battery = 12;
+
+    // Optional central/dongle battery. USB-only dongles normally report -1.
+    int32 dongle_battery = 13;
+
+    // Generic firmware cannot reliably infer host OS. Board-specific status
+    // providers may override UNKNOWN when they have an explicit OS-mode state.
+    StatusOsMode os_mode = 14;
+}
+
 message Request {
     oneof request_type {
         bool get_device_info = 1;
         bool get_lock_state = 2;
         bool lock = 3;
         bool reset_settings = 4;
+        bool get_status = 5;
     }
 }
 
@@ -21,6 +59,7 @@ message Response {
         GetDeviceInfoResponse get_device_info = 1;
         LockState get_lock_state = 2;
         bool reset_settings = 4;
+        StatusSnapshot get_status = 5;
     }
 }
 
@@ -32,5 +71,6 @@ message GetDeviceInfoResponse {
 message Notification {
     oneof notification_type {
         LockState lock_state_changed = 1;
+        StatusSnapshot status_changed = 2;
     }
 }
