@@ -33,11 +33,11 @@ message StatusSnapshot {
 
     // -1 means unavailable/not reported. Source 0 and source 1 are the two
     // split peripherals; Studio presents them as L/R for two-half keyboards.
-    int32 left_battery = 11;
-    int32 right_battery = 12;
+    sint32 left_battery = 11;
+    sint32 right_battery = 12;
 
     // Optional central/dongle battery. USB-only dongles normally report -1.
-    int32 dongle_battery = 13;
+    sint32 dongle_battery = 13;
 
     // Generic firmware cannot reliably infer host OS. Board-specific status
     // providers may override UNKNOWN when they have an explicit OS-mode state.
